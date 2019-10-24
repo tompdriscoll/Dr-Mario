@@ -1,0 +1,144 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/game.js":
+/*!*********************!*\
+  !*** ./src/game.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const Virus = __webpack_require__(/*! ./virus */ \"./src/virus.js\")\nconst Pill = __webpack_require__(/*! ./pill */ \"./src/pill.js\");\n\n\nfunction Game(grid) {\n  this.pills = [];\n  this.viruses = [];\n  this.currentPill = null\n  this.addPill()\n  this.ships = [];\n  this.addViruses()\n  this.grid = grid\n}\n\nGame.BG_COLOR = \"#000000\";\nGame.DIM_X = 1000;\nGame.DIM_Y = 600; \nGame.FPS = 2;\nGame.NUM_VIRUSES = 10;\n\nGame.prototype.add = function add(object) {\n  if (object instanceof Pill) {\n    this.pills.push(object);\n  } \n  else if (object instanceof Virus) {\n    this.viruses.push(object);\n  } \n  else {\n    throw new Error(\"unknown type of object\");\n  }\n};\n\nGame.prototype.addViruses = function addViruses() {\n  \n  for (let i = 0; i < Game.NUM_VIRUSES; i++) {\n    this.add(new Virus({ game: this }));\n  }\n};\n\nGame.prototype.addPill = function addPill() {\n  let pill = new Pill({\n    game: this\n  });\n  this.currentPill = pill\n  this.add(pill);\n  return pill;\n\n}; \n\nGame.prototype.allObjects = function allObjects() {\n  return [].concat(this.pills, this.viruses);\n};\n\nGame.prototype.checkCollisions = function checkCollisions() {\n  let check1 = this.currentPill.idx1 + 8\n  let check2  = this.currentPill.idx2 + 8\n  if (check1 >= 128 || check2 >= 128){\n    this.currentPill.collided = true\n    this.addPill()\n    return false\n  }\n  else if (this.grid[check1].classList.length > 1 && (check1 !== this.currentPill.idx2)) {\n    this.currentPill.collided = true\n    this.addPill()\n    return false\n  }\n  else if (this.grid[check2].classList.length > 1 && (check2 !== this.currentPill.idx1)) {\n    this.currentPill.collided = true\n    this.addPill()\n    return false\n  }\n  return true\n};\n\nGame.prototype.checkMove = function checkMove(move) {\n\n  let pill = this.currentPill\n  if (move[0] === 20){\n    if (pill.idx1%8 === 7 || pill.idx2%8 === 7 ){\n      return false\n    }\n    else if (pill.idx1+1 !== pill.idx2 && this.grid[pill.idx1 +1].classList.length > 1){\n      return false\n    }\n    else if (pill.idx2+1 !== pill.idx1 && this.grid[pill.idx2 +1].classList.length > 1){\n      return false\n    } \n  }    \n  else if (move[0] === -20){\n    if (pill.idx1%8 === 0 || pill.idx2%8 === 0 ){\n      return false\n    }\n    else if (pill.idx1-1 !== pill.idx2 && this.grid[pill.idx1 -1].classList.length > 1){\n      return false\n    }\n    else if (pill.idx2-1 !== pill.idx1 && this.grid[pill.idx2 -1].classList.length > 1){\n      return false\n    } \n  }\n  else if (move[0] === 0 && !this.checkCollisions()){\n    return false\n  } \n  return true\n}\n\nGame.prototype.checkRotate = function checkRotate() {\n  let pill = this.currentPill\n  if (this.currentPill.horizontal) {\n    let less = pill.idx1 > pill.idx2 ? pill.idx2 : pill.idx1\n    if (this.grid[less-8] && this.grid[less - 8].classList.length > 1){\n      return false\n    }\n    return true\n  }\n  else{\n    let greater = pill.idx1 < pill.idx2 ? pill.idx2 : pill.idx1\n    if ((greater+1)%8 === 0 || this.grid[greater + 1].classList.length > 1){\n      return false\n    }\n    return true\n  }\n}\n\nGame.prototype.draw = function draw(ctx) {\n  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);\n  ctx.fillStyle = Game.BG_COLOR;\n  ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);\n   \n  this.allObjects().forEach(function(object) {\n    object.draw(ctx);\n  });\n};\n\nGame.prototype.checkRemove = function checkRemove(idx1, idx2){\n  if(this.currentPill.horizontal){\n    this.inefhorizontalCheck(idx1)\n    this.inefVerticalCheck(idx1)\n    this.inefVerticalCheck(idx2)\n  } \n  else{\n    this.inefhorizontalCheck(idx1)\n    this.inefhorizontalCheck(idx2)\n    this.inefVerticalCheck(idx1)\n  }\n}\n\nGame.prototype.inefhorizontalCheck = function inefhorizontalCheck(idx) {\n  let start1 = (idx - (idx%8))\n  let streak = []\n  let color = null\n  for (i=start1; i<start1+8; i++){\n    if (this.grid[i].classList.length > 1){\n      color = color ? color : this.grid[i].classList[this.grid[i].classList.length-1]\n      if (this.grid[i].classList[this.grid[i].classList.length-1] === color){\n        streak.push(i)\n      }\n      else {\n        if (streak.length >= 4){\n          this.remove(streak, color)                      \n        }\n        streak =[]  \n        color = this.grid[i].classList[this.grid[i].classList.length-1]\n        streak.push(i)\n      }\n    }\n    else {\n      if (streak.length >= 4){\n        this.remove(streak, color)                      \n      }\n      streak =[] \n      color = null\n    }\n  }\n  if (streak.length >= 4){\n    this.remove(streak, color)                      \n  }\n};\n\nGame.prototype.inefVerticalCheck = function inefVerticalCheck(idx) {\n  let start1 = (idx%8)\n  let streak = []\n  let color = null\n  for (i=start1; i<127; i += 8){\n    if (this.grid[i].classList.length > 1){\n      color = color ? color : this.grid[i].classList[this.grid[i].classList.length-1]\n      if (this.grid[i].classList[this.grid[i].classList.length-1] === color){\n        streak.push(i)\n      }\n      else {\n        if (streak.length >= 4){\n          this.remove(streak, color)                      \n        }\n        streak =[]  \n        color = this.grid[i].classList[this.grid[i].classList.length-1]\n        streak.push(i)\n      }\n    }\n    else {\n      if (streak.length >= 4){\n        this.remove(streak, color)                      \n      }\n      streak =[] \n      color = null\n    }\n  }\n  if (streak.length >= 4){\n    this.remove(streak, color)                      \n  }\n};\n\nGame.prototype.moveObjects = function moveObjects(delta) {\n  this.currentPill.move()\n \n};\n\nGame.prototype.randomPosition = function randomPosition() {\n  return [\n    Game.DIM_X * Math.random(),\n    Game.DIM_Y * Math.random()\n  ];\n};\n\nGame.prototype.remove = function remove(arr) {\n  arr.forEach(idx => {\n    this.grid[idx].classList.toggle('cornflowerblue', false)\n    this.grid[idx].classList.toggle('virus', false)\n    this.grid[idx].classList.toggle('salmon', false)\n    this.grid[idx].classList.toggle('bisque', false)\n  })\n};\n\nGame.prototype.step = function step(delta) {\n  \n  this.moveObjects(delta);\n\n};\n\n\n\nmodule.exports = Game;\n\n\n//# sourceURL=webpack:///./src/game.js?");
+
+/***/ }),
+
+/***/ "./src/game_view.js":
+/*!**************************!*\
+  !*** ./src/game_view.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("function GameView(game, ctx) {\n  this.ctx = ctx;\n  this.game = game;\n  this.interval = 1000\n}\n\nGameView.MOVES = {\n  left: [-20, 0],\n  down: [0, 20],\n  right: [20, 0],\n};\n\nGameView.prototype.bindKeyHandlers = function bindKeyHandlers() {\n  key.unbind('space')\n  key.unbind('left')\n  key.unbind('right')\n  key.unbind('down')\n\n  let pill = this.game.currentPill\n  Object.keys(GameView.MOVES).forEach(function(k)  {\n    const move = GameView.MOVES[k];\n    key(k, function () { pill.control(move); });\n  });\n\n    key(\"space\", function () { pill.rotate(); });\n};\n\nGameView.prototype.start = function start() {\n  this.lastTime = 0;\n  // start the animation\n  setInterval(() => {\n    this.bindKeyHandlers();\n    this.game.step();\n    this.game.draw(this.ctx); \n  }, this.interval);\n  requestAnimationFrame(this.animate.bind(this));\n  \n};\n\nGameView.prototype.animate = function animate(time) {\n  const timeDelta = time - this.lastTime;\n\n  this.game.draw(this.ctx);\n  // setInterval(() => {\n  //   this.bindKeyHandlers();\n  //   this.game.step();\n  // }, this.interval);\n  // every call to animate requests causes another call to animate\n  requestAnimationFrame(this.animate.bind(this));\n};\n\nmodule.exports = GameView;\n\n\n//# sourceURL=webpack:///./src/game_view.js?");
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\nconst GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\")\nconst Pill = __webpack_require__(/*! ./pill */ \"./src/pill.js\")\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {``\n    var vid = document.getElementById(\"fever\");\n    vid.volume = 0.2;\n    const canvasEl = document.getElementsByTagName(\"canvas\")[0];\n    const grid = document.getElementsByClassName('grid-square-square')\n    canvasEl.width = 700\n    canvasEl.height = 500\n    const game = new Game(grid);\n    const ctx = canvasEl.getContext(\"2d\");\n    new GameView(game, ctx).start();\n  });\n  \n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/pill.js":
+/*!*********************!*\
+  !*** ./src/pill.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval(" \nfunction Pill(options){\n    this.color1 = randomColor()\n    this.color2 = randomColor()\n    this.radius = 9;\n    this.pos1 = [280, 100]\n    this.pos2 = [300, 100]\n    this.idx1 = 3\n    this.idx2 = 4\n    this.rot1 = 2\n    this.rot2 = 0\n    this.game = options.game;\n    this.collided = false\n    this.horizontal = true\n    this.placeOnGrid()\n}\n\nPill.prototype.draw = function draw(ctx) {\n    ctx.fillStyle = this.color1;\n    ctx.beginPath();\n    ctx.arc(\n      this.pos1[0], this.pos1[1], this.radius, 0, 2 * Math.PI, true\n    );\n    ctx.fill();\n\n    ctx.fillStyle = this.color2;\n    ctx.beginPath();\n    ctx.arc(\n      this.pos2[0], this.pos2[1], this.radius, 0, 2 * Math.PI, true\n    );\n    ctx.fill();\n    \n};\n\nPill.prototype.placeOnGrid = function placeOnGrid(){ \n    let squares;\n    this.idx1 = ((((this.pos1[0]-200)/20) + ((this.pos1[1]-100)/20)*8) -1)\n    this.idx2 = ((((this.pos2[0]-200)/20) + ((this.pos2[1]-100)/20)*8) -1)\n    squares = document.getElementsByClassName('grid-square-square')  \n    squares[this.idx1].classList.toggle(`${this.color1}`)\n    squares[this.idx2].classList.toggle(`${this.color2}`)\n    if(this.collided){\n        this.game.checkRemove(this.idx1, this.idx2)   \n    }\n}\n\nPill.prototype.move = function move() {\n    if(!this.collided){\n        this.placeOnGrid()\n        this.game.checkCollisions()\n        if (!this.collided){\n        this.pos1[1] += 20\n        this.pos2[1] += 20\n        }\n    }\n    this.placeOnGrid()  \n}\n\nPill.prototype.control = function control(move){  \n    if(!this.collided){\n        this.placeOnGrid()\n        this.game.checkCollisions()\n        if (this.game.checkMove(move) && !this.collided){\n        this.pos1[0] += move[0]\n        this.pos2[0] += move[0]\n        this.pos1[1] += move[1]\n        this.pos2[1] += move[1]\n    }\n    this.placeOnGrid()\n    }\n}\n\nPill.prototype.rotate = function rotate(move){   \n    if(!this.collided){\n        this.placeOnGrid()\n        this.game.checkCollisions()\n        if (this.game.checkRotate()){\n        let rotatations = [[-20, -20], [0, 20], [0, 0], [20, 0]]\n        this.pos1[0] += rotatations[this.rot1][0]\n        this.pos1[1] += rotatations[this.rot1][1]\n        this.pos2[0] += rotatations[this.rot2][0]\n        this.pos2[1] += rotatations[this.rot2][1]\n        this.rot1 = Math.round((this.rot1 + 1 ) % 4 )   \n        this.rot2 = Math.round((this.rot2 + 1 ) % 4 ) \n        this.horizontal = this.horizontal ? false : true;\n        }\n        this.placeOnGrid()    \n    }\n}\n\n// function convertToGridIdx(pos){\n//     let idx = (((pos[0]-200)/20) + ((pos[1]-100)/20)/8) -1\n//     return idx\n// }\n\nfunction randomColor() {\n    const possibleColors = ['cornflowerblue', 'salmon', 'bisque']  \n    let color = possibleColors[Math.floor((Math.random() * 3))];\n    return color;\n}\n\n\nmodule.exports = Pill; \n\n//# sourceURL=webpack:///./src/pill.js?");
+
+/***/ }),
+
+/***/ "./src/virus.js":
+/*!**********************!*\
+  !*** ./src/virus.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("\nfunction Virus(options){\n    this.game = options.game;\n    this.color = randomColor();\n    this.radius = 9;  \n    this.pos = this.randomPosition()\n}\n\nVirus.prototype.draw = function draw(ctx) {\n    ctx.fillStyle = this.color;\n  \n    ctx.beginPath();\n    ctx.arc(\n      this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI, true\n    );\n    ctx.fill();\n  };\n\n  Virus.prototype.randomPosition =  function randomPosition(){\n        let x = Math.round(Math.random() * 7) + 1;\n        let y = Math.round(Math.random() * 10) + 5;\n        let idx =  (y * 8 - 1) + x\n        let squares = document.getElementsByClassName('grid-square-square')\n        if (squares[idx].classList.contains('virus')){\n            return randomPosition()\n        }\n        else{  \n            squares[idx].classList.add('virus', `${this.color}`)\n        }\n        let x2 = Math.floor(200 + (x * 20))\n        let y2 = Math.floor(100 + (y * 20))\n        return [x2, y2]\n  }\n\n  function randomColor() {\n    const possibleColors = ['cornflowerblue', 'salmon', 'bisque']  \n    color = possibleColors[Math.floor((Math.random() * 3))];\n    return color;\n  }\n\n  Virus.prototype.move = function move(){\n     console.log('okay')\n  }\n\nmodule.exports = Virus;\n\n//# sourceURL=webpack:///./src/virus.js?");
+
+/***/ })
+
+/******/ });

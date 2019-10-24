@@ -1,0 +1,37 @@
+body{
+    background:#111111;;
+}
+
+#grid{
+    background: #111111;;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(8, 20px)
+}
+
+.virus{
+    border: .5px solid red;  
+}
+
+.grid-square-square{
+    height: 20px;
+    width: 20px;
+    background: black;
+}
+
+.cornflowerblue{
+    background: cornflowerblue;
+}
+
+.salmon{
+    background: salmon;
+}
+
+.bisque{
+    background: bisque;
+}
+
+#dr{
+    height: 250px;
+    vertical-align: top;
+}
