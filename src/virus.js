@@ -3,18 +3,8 @@ function Virus(options){
     this.game = options.game;
     this.color = randomColor();
     this.radius = 9;  
-    this.pos = this.randomPosition()
+    this.idx = this.randomPosition()
 }
-
-Virus.prototype.draw = function draw(ctx) {
-    ctx.fillStyle = this.color;
-  
-    ctx.beginPath();
-    ctx.arc(
-      this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI, true
-    );
-    ctx.fill();
-  };
 
   Virus.prototype.randomPosition =  function randomPosition(){
         let x = Math.round(Math.random() * 7) + 1;

@@ -12,10 +12,6 @@ function Game(grid) {
   this.grid = grid
 }
 
-Game.BG_COLOR = "#000000";
-Game.DIM_X = 1000;
-Game.DIM_Y = 600; 
-Game.FPS = 2;
 Game.NUM_VIRUSES = 10;
 
 Game.prototype.add = function add(object) {
@@ -121,15 +117,15 @@ Game.prototype.checkRotate = function checkRotate() {
   }
 }
 
-Game.prototype.draw = function draw(ctx) {
-  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-  ctx.fillStyle = Game.BG_COLOR;
-  ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);
+// Game.prototype.draw = function draw(ctx) {
+//   ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+//   ctx.fillStyle = Game.BG_COLOR;
+//   ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);
    
-  this.allObjects().forEach(function(object) {
-    object.draw(ctx);
-  });
-};
+//   this.allObjects().forEach(function(object) {
+//     object.draw(ctx);
+//   });
+// };
 
 Game.prototype.checkRemove = function checkRemove(idx1, idx2){
   if(this.currentPill.horizontal){
@@ -199,7 +195,7 @@ Game.prototype.inefVerticalCheck = function inefVerticalCheck(idx) {
       if (streak.length >= 4){
         this.remove(streak, color)                      
       }
-      streak =[] 
+      streak =[]
       color = null
     }
   }
@@ -213,17 +209,17 @@ Game.prototype.moveObjects = function moveObjects(delta) {
  
 };
 
-Game.prototype.randomPosition = function randomPosition() {
-  return [
-    Game.DIM_X * Math.random(),
-    Game.DIM_Y * Math.random()
-  ];
-};
+// `Game.prototype.randomPosition = function randomPosition() {
+//   return [
+//     Game.DIM_X * Math.random(),
+//     Game.DIM_Y * Math.random()
+//   ];
+// };`
 
 Game.prototype.remove = function remove(arr) {
   arr.forEach(idx => {
-    this.grid[idx].classList.toggle('cornflowerblue', false)
     this.grid[idx].classList.toggle('virus', false)
+    this.grid[idx].classList.toggle('cornflowerblue', false)
     this.grid[idx].classList.toggle('salmon', false)
     this.grid[idx].classList.toggle('bisque', false)
   })

@@ -1,13 +1,12 @@
-function GameView(game, ctx) {
-  this.ctx = ctx;
+function GameView(game) {
   this.game = game;
   this.interval = 1000
 }
 
 GameView.MOVES = {
-  left: [-20, 0],
-  down: [0, 20],
-  right: [20, 0],
+  left: -1,
+  down: 8,
+  right: 1,
 };
 
 GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
@@ -26,27 +25,11 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 };
 
 GameView.prototype.start = function start() {
-  this.lastTime = 0;
-  // start the animation
   setInterval(() => {
     this.bindKeyHandlers();
-    this.game.step();
-    this.game.draw(this.ctx); 
+    this.game.step(); 
   }, this.interval);
-  requestAnimationFrame(this.animate.bind(this));
   
-};
-
-GameView.prototype.animate = function animate(time) {
-  const timeDelta = time - this.lastTime;
-
-  this.game.draw(this.ctx);
-  // setInterval(() => {
-  //   this.bindKeyHandlers();
-  //   this.game.step();
-  // }, this.interval);
-  // every call to animate requests causes another call to animate
-  requestAnimationFrame(this.animate.bind(this));
 };
 
 module.exports = GameView;
