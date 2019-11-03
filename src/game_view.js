@@ -1,5 +1,7 @@
-function GameView(game) {
-  this.game = game;
+const Game = require("./game");
+
+function GameView() {
+  this.game = null;
   this.interval = 1000
 }
 
@@ -25,11 +27,18 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 };
 
 GameView.prototype.start = function start() {
+  document.getElementsByClassName('toHide')[0].classList.toggle('hidden')
+  document.getElementsByClassName('toHide')[1].classList.toggle('hidden')
+  const grid = document.getElementsByClassName('grid-square-square')
+  this.game = new Game(grid);
   setInterval(() => {
     this.bindKeyHandlers();
     this.game.step(); 
   }, this.interval);
-  
 };
+
+GameView.prototype.splash = function splash(){ 
+  key("space",  this.start.bind(this));
+}
 
 module.exports = GameView;

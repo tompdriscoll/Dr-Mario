@@ -17,48 +17,48 @@ Pill.prototype.placeOnGrid = function placeOnGrid(){
     squares = document.getElementsByClassName('grid-square-square')  
     squares[this.idx1].classList.toggle(`${this.color1}`)
     squares[this.idx2].classList.toggle(`${this.color2}`)
-    if(this.collided){
-        this.game.checkRemove(this.idx1, this.idx2)   
-    }
+    // if(this.collided){
+    //     this.game.checkRemove(this.idx1, this.idx2)   
+    // }
 }
 
 Pill.prototype.move = function move() {
     if(!this.collided){
         this.placeOnGrid()
-        this.game.checkCollisions()
         if (!this.collided){
-        this.idx1 += 8
-        this.idx2 += 8
+            this.idx1 += 8
+            this.idx2 += 8
         }
     }
     this.placeOnGrid()  
+    this.game.checkCollisions()
 }
 
 Pill.prototype.control = function control(move){  
     if(!this.collided){
         this.placeOnGrid()
-        this.game.checkCollisions()
         if (this.game.checkMove(move) && !this.collided){
-        this.idx1 += move
-        this.idx2 += move
-    }
-    this.placeOnGrid()
+            this.idx1 += move
+            this.idx2 += move
+        }
+        this.placeOnGrid()
+        this.game.checkCollisions()
     }
 }
 
 Pill.prototype.rotate = function rotate(move){   
     if(!this.collided){
         this.placeOnGrid()
-        this.game.checkCollisions()
         if (this.game.checkRotate()){
-        let rotatations = [ -9, 8, 0, 1]
-        this.idx1 += rotatations[this.rot1]
-        this.idx2 += rotatations[this.rot2]
-        this.rot1 = Math.round((this.rot1 + 1 ) % 4 )   
-        this.rot2 = Math.round((this.rot2 + 1 ) % 4 ) 
-        this.horizontal = this.horizontal ? false : true;
+            let rotatations = [ -9, 8, 0, 1]
+            this.idx1 += rotatations[this.rot1]
+            this.idx2 += rotatations[this.rot2]
+            this.rot1 = Math.round((this.rot1 + 1 ) % 4 )   
+            this.rot2 = Math.round((this.rot2 + 1 ) % 4 ) 
+            this.horizontal = this.horizontal ? false : true;
         }
         this.placeOnGrid()    
+        this.game.checkCollisions()
     }
 }
 

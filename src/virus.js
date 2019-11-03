@@ -2,7 +2,6 @@
 function Virus(options){
     this.game = options.game;
     this.color = randomColor();
-    this.radius = 9;  
     this.idx = this.randomPosition()
 }
 
@@ -26,10 +25,6 @@ function Virus(options){
     const possibleColors = ['cornflowerblue', 'salmon', 'bisque']  
     color = possibleColors[Math.floor((Math.random() * 3))];
     return color;
-  }
-
-  Virus.prototype.move = function move(){
-     console.log('okay')
   }
 
 module.exports = Virus;
