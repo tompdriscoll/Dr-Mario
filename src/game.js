@@ -7,13 +7,12 @@ function Game(grid) {
   this.viruses = [];
   this.toRemove = null;
   this.currentPill = null
-  this.addPill()
-  this.grid = grid
-  // debugger
   this.level = document.getElementById('level-slider').value;
+  this.grid = grid
+  this.addPill()
   this.addViruses()
+  this.winLose = false
 }
-
 
 Game.prototype.add = function add(object) {
   if (object instanceof Pill) {
@@ -35,6 +34,7 @@ Game.prototype.addViruses = function addViruses() {
 };
 
 Game.prototype.addPill = function addPill() {
+  if (this.grid[3].classList.length !== 0) this.gameOver();
   let pill = new Pill({
     game: this
   });
@@ -51,19 +51,19 @@ Game.prototype.allObjects = function allObjects() {
 Game.prototype.checkCollisions = function checkCollisions() {
   let check1 = this.currentPill.idx1 + 8
   let check2  = this.currentPill.idx2 + 8
-  if (check1 >= 128 || check2 >= 128){
-    this.currentPill.collided = true 
-    this.toRemove = this.checkRemove(this.currentPill.idx1, this.currentPill.idx2)   
-    this.currentPill = null
-    return false
-  }
-  else if (this.grid[check1].classList.length > 1 && (check1 !== this.currentPill.idx2)) {
+  if (check1 >= 128 ||  check2 >= 128) {
     this.currentPill.collided = true
     this.toRemove = this.checkRemove(this.currentPill.idx1, this.currentPill.idx2)   
     this.currentPill = null
     return false
   }
-  else if (this.grid[check2].classList.length > 1 && (check2 !== this.currentPill.idx1)) {
+  else if (this.grid[check1].classList.length > 1 && (check1 !== this.currentPill.idx2)){
+    this.currentPill.collided = true
+    this.toRemove = this.checkRemove(this.currentPill.idx1, this.currentPill.idx2)   
+    this.currentPill = null
+    return false
+  }
+  else if(this.grid[check2].classList.length > 1 && (check2 !== this.currentPill.idx1)){
     this.currentPill.collided = true
     this.toRemove = this.checkRemove(this.currentPill.idx1, this.currentPill.idx2)   
     this.currentPill = null
@@ -73,29 +73,22 @@ Game.prototype.checkCollisions = function checkCollisions() {
 };
 
 Game.prototype.checkMove = function checkMove(move) {
-
-  let pill = this.currentPill
+  let idx1 = this.currentPill.idx1
+  let idx2 = this.currentPill.idx2
   if (move === 1){
-    if (pill.idx1%8 === 7 || pill.idx2%8 === 7 ){
-      return false
-    }
-    else if (pill.idx1+1 !== pill.idx2 && this.grid[pill.idx1 +1].classList.length > 1){
-      return false
-    }
-    else if (pill.idx2+1 !== pill.idx1 && this.grid[pill.idx2 +1].classList.length > 1){
+    if (idx1%8 === 7 ||
+       idx2%8 === 7 ||
+      (idx1+1 !== idx2 && this.grid[idx1 +1].classList.length > 1) ||
+      (idx2+1 !== idx1 && this.grid[idx2 +1].classList.length > 1)){
       return false
     } 
   }    
   else if (move === -1){
-    if (pill.idx1%8 === 0 || pill.idx2%8 === 0 ){
-      return false
-    }
-    else if (pill.idx1-1 !== pill.idx2 && this.grid[pill.idx1 -1].classList.length > 1){
-      return false
-    }
-    else if (pill.idx2-1 !== pill.idx1 && this.grid[pill.idx2 -1].classList.length > 1){
-      return false
-    } 
+    if (idx1%8 === 0 || 
+      idx2%8 === 0  ||
+      (idx1-1 !== idx2 && this.grid[idx1 -1].classList.length > 1) ||
+      (idx2-1 !== idx1 && this.grid[idx2 -1].classList.length > 1)){
+      return false} 
   }
   else if (move === 8 && !this.checkCollisions()){
     return false
@@ -110,26 +103,15 @@ Game.prototype.checkRotate = function checkRotate() {
     if (this.grid[less-8] && this.grid[less - 8].classList.length > 1){
       return false
     }
-    return true
   }
   else{
     let greater = pill.idx1 < pill.idx2 ? pill.idx2 : pill.idx1
     if ((greater+1)%8 === 0 || this.grid[greater + 1].classList.length > 1){
       return false
     }
-    return true
   }
+  return true
 }
-
-// Game.prototype.draw = function draw(ctx) {
-//   ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-//   ctx.fillStyle = Game.BG_COLOR;
-//   ctx.fillRect(0, 0, Game.DIM_X, Game.DIM_Y);
-   
-//   this.allObjects().forEach(function(object) {
-//     object.draw(ctx);
-//   });
-// };
 
 Game.prototype.checkRemove = function checkRemove(idx1, idx2){
   if(this.currentPill.horizontal){
@@ -235,6 +217,10 @@ Game.prototype.step = function step(delta) {
   }
   if (!this.currentPill) this.addPill()
 };
+
+Game.prototype.gameOver = function gameOver(){
+  this.winLose = true
+}
 
 
 

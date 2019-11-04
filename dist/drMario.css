@@ -19,7 +19,8 @@ body{
 }
 
 .virus{
-    border: .5px solid red;  
+    border-radius: 15px;
+    z-index: 2;
 }
 
 .grid-square-square{

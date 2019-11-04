@@ -3,6 +3,7 @@ const Game = require("./game");
 function GameView() {
   this.game = null;
   this.interval = 1000
+  this.grid = document.getElementsByClassName('grid-square-square')
 }
 
 GameView.MOVES = {
@@ -27,17 +28,30 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 };
 
 GameView.prototype.start = function start() {
-  Array.from(document.getElementsByClassName('toHide')).forEach(ele => ele.classList.toggle('hidden'))
-  const grid = document.getElementsByClassName('grid-square-square')
+  switchScreen()
   this.game = new Game(grid);
   setInterval(() => {
     this.bindKeyHandlers();
     this.game.step(); 
+    if (this.game.winLose) {
+      debugger
+      delete this.game
+      this.game = null
+      this.start()
+    }
   }, this.interval);
 };
 
 GameView.prototype.splash = function splash(){ 
   key("space",  this.start.bind(this));
+}
+
+GameView.prototype.clearGrid = function clearGrid(){
+ 
+}
+
+function switchScreen(){
+  Array.from(document.getElementsByClassName('toHide')).forEach(ele => ele.classList.toggle('hidden'))
 }
 
 module.exports = GameView;

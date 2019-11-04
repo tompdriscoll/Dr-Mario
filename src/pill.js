@@ -17,9 +17,6 @@ Pill.prototype.placeOnGrid = function placeOnGrid(){
     squares = document.getElementsByClassName('grid-square-square')  
     squares[this.idx1].classList.toggle(`${this.color1}`)
     squares[this.idx2].classList.toggle(`${this.color2}`)
-    // if(this.collided){
-    //     this.game.checkRemove(this.idx1, this.idx2)   
-    // }
 }
 
 Pill.prototype.move = function move() {
