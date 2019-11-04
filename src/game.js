@@ -8,11 +8,12 @@ function Game(grid) {
   this.toRemove = null;
   this.currentPill = null
   this.addPill()
-  this.addViruses()
   this.grid = grid
+  // debugger
+  this.level = document.getElementById('level-slider').value;
+  this.addViruses()
 }
 
-Game.NUM_VIRUSES = 10;
 
 Game.prototype.add = function add(object) {
   if (object instanceof Pill) {
@@ -27,8 +28,8 @@ Game.prototype.add = function add(object) {
 };
 
 Game.prototype.addViruses = function addViruses() {
-  
-  for (let i = 0; i < Game.NUM_VIRUSES; i++) {
+
+  for (let i = 0; i < this.level; i++) {
     this.add(new Virus({ game: this }));
   }
 };
