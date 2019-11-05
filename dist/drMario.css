@@ -40,15 +40,15 @@ body{
 }
 
 .cornflowerblue{
-    background: cornflowerblue;
+    background: #0073ef;
 }
 
 .salmon{
-    background: salmon;
+    background: #e6005a;
 }
 
 .bisque{
-    background: bisque;
+    background: rgb(255, 230, 0);
 }
 
 #dr{
@@ -67,4 +67,34 @@ body{
 #spaceTo{
     align-self: center;
     margin-top: 30%;
+}
+
+#level-value{
+    color: white;
+}
+
+#level-slider{
+    width: 75%;
+}
+
+#level-value{
+    width: 40px;
+    margin-left: 20px
+}
+
+#level-picker-div{
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.controls{
+    color: white;
+    margin: auto;
+    font-size: 18px;
+}
+
+.controls:first-of-type{
+    margin-top: 25px;
+    margin-bottom: 10px;
 }
