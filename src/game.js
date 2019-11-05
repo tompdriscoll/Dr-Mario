@@ -27,18 +27,18 @@ Game.prototype.add = function add(object) {
 };
 
 Game.prototype.addViruses = function addViruses() {
-
   for (let i = 0; i < this.level; i++) {
     this.add(new Virus({ game: this }));
   }
 };
 
 Game.prototype.addPill = function addPill() {
-  if (this.grid[3].classList.length !== 0) this.gameOver();
+  // if (this.grid[3].classList.length > 1) return this.gameOver();
   let pill = new Pill({
     game: this
   });
   this.currentPill = pill
+  if (!this.checkCollisions()) return this.gameOver()
   this.add(pill);
   return pill;
 

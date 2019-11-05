@@ -29,15 +29,16 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 
 GameView.prototype.start = function start() {
   switchScreen()
-  this.game = new Game(grid);
-  setInterval(() => {
+  this.game = new Game(this.grid);
+  var gameLoop = setInterval(() => {
     this.bindKeyHandlers();
     this.game.step(); 
     if (this.game.winLose) {
-      debugger
-      delete this.game
+      this.clearGrid()
       this.game = null
-      this.start()
+      clearInterval(gameLoop)
+      switchScreen()
+      this.splash()
     }
   }, this.interval);
 };
@@ -47,7 +48,13 @@ GameView.prototype.splash = function splash(){
 }
 
 GameView.prototype.clearGrid = function clearGrid(){
- 
+  Array.from(this.grid).forEach(ele => {
+    ele.classList.toggle('virus', false)
+    ele.classList.toggle('cornflowerblue', false)
+    ele.classList.toggle('salmon', false)
+    ele.classList.toggle('bisque', false)
+    ele.classList.toggle('pill', false)
+  })
 }
 
 function switchScreen(){
