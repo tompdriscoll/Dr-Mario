@@ -6,8 +6,9 @@ const Pill = require("./pill")
 document.addEventListener("DOMContentLoaded", function () {
     var vid = document.getElementById("fever");
     vid.volume = 0.0;
-    document.getElementById('level-slider').addEventListener( "mouseup", function () {
-      document.getElementById('level-value').textContent =  document.getElementById('level-slider').value
+    let slider = document.getElementById('level-slider')
+    slider.addEventListener( "mouseup", function () {
+      document.getElementById('level-value').textContent =  slider.value
     })
     new GameView().splash();
   });

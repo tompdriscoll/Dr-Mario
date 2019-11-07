@@ -115,7 +115,7 @@ eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\n\nfunc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\")\nconst Pill = __webpack_require__(/*! ./pill */ \"./src/pill.js\")\n\n\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n    var vid = document.getElementById(\"fever\");\n    vid.volume = 0.0;\n    document.getElementById('level-slider').addEventListener( \"mouseup\", function () {\n      document.getElementById('level-value').textContent =  document.getElementById('level-slider').value\n    })\n    new GameView().splash();\n  });\n  \n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\")\nconst Pill = __webpack_require__(/*! ./pill */ \"./src/pill.js\")\n\n\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n    var vid = document.getElementById(\"fever\");\n    vid.volume = 0.0;\n    let slider = document.getElementById('level-slider')\n    slider.addEventListener( \"mouseup\", function () {\n      document.getElementById('level-value').textContent =  slider.value\n    })\n    new GameView().splash();\n  });\n  \n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
