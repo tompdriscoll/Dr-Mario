@@ -15,20 +15,32 @@ function Pill(options){
 Pill.prototype.placeOnGrid = function placeOnGrid(){ 
     let squares;
     squares = document.getElementsByClassName('grid-square-square')  
+    squares[this.idx1].classList.toggle(`pill`)
+    squares[this.idx2].classList.toggle(`pill`)
     squares[this.idx1].classList.toggle(`${this.color1}`)
     squares[this.idx2].classList.toggle(`${this.color2}`)
+    let min = this.idx1 < this.idx2 ? this.idx1 : this.idx2
+    let max = this.idx1 > this.idx2 ? this.idx1 : this.idx2
+    if (this.horizontal){
+        squares[min].classList.toggle(`minHor`)
+        squares[max].classList.toggle(`maxHor`)
+    } else {
+        squares[min].classList.toggle(`minVer`)
+        squares[max].classList.toggle(`maxVer`)  
+    }
 }
 
 Pill.prototype.move = function move() {
+    this.game.checkCollisions(this)
+    
+    this.placeOnGrid()
     if(!this.collided){
-        this.placeOnGrid()
-        if (!this.collided){
+        if (this.game.checkMove(8) && !this.collided){
             this.idx1 += 8
             this.idx2 += 8
         }
     }
     this.placeOnGrid()  
-    this.game.checkCollisions()
 }
 
 Pill.prototype.control = function control(move){  
@@ -39,7 +51,7 @@ Pill.prototype.control = function control(move){
             this.idx2 += move
         }
         this.placeOnGrid()
-        this.game.checkCollisions()
+        
     }
 }
 
@@ -55,14 +67,9 @@ Pill.prototype.rotate = function rotate(move){
             this.horizontal = this.horizontal ? false : true;
         }
         this.placeOnGrid()    
-        this.game.checkCollisions()
     }
 }
 
-// function convertToGridIdx(pos){
-//     let idx = (((pos[0]-200)/20) + ((pos[1]-100)/20)/8) -1
-//     return idx
-// }
 
 function randomColor() {
     const possibleColors = ['cornflowerblue', 'salmon', 'bisque']  

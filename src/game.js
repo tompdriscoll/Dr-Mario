@@ -48,24 +48,25 @@ Game.prototype.allObjects = function allObjects() {
   return [].concat(this.pills, this.viruses);
 };
 
-Game.prototype.checkCollisions = function checkCollisions() {
-  let check1 = this.currentPill.idx1 + 8
-  let check2  = this.currentPill.idx2 + 8
+Game.prototype.checkCollisions = function checkCollisions(pill=this.currentPill) {
+  
+  let check1 = pill.idx1 + 8
+  let check2  = pill.idx2 + 8
   if (check1 >= 128 ||  check2 >= 128) {
-    this.currentPill.collided = true
-    this.toRemove = this.checkRemove(this.currentPill.idx1, this.currentPill.idx2)   
+    pill.collided = true
+    this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))   
     this.currentPill = null
     return false
   }
-  else if (this.grid[check1].classList.length > 1 && (check1 !== this.currentPill.idx2)){
-    this.currentPill.collided = true
-    this.toRemove = this.checkRemove(this.currentPill.idx1, this.currentPill.idx2)   
+  else if (this.grid[check1].classList.length > 1 && (check1 !== pill.idx2)){
+    pill.collided = true
+    this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))    
     this.currentPill = null
     return false
   }
-  else if(this.grid[check2].classList.length > 1 && (check2 !== this.currentPill.idx1)){
-    this.currentPill.collided = true
-    this.toRemove = this.checkRemove(this.currentPill.idx1, this.currentPill.idx2)   
+  else if(this.grid[check2].classList.length > 1 && (check2 !== pill.idx1)){
+    pill.collided = true
+    this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))  
     this.currentPill = null
     return false
   }
@@ -90,8 +91,12 @@ Game.prototype.checkMove = function checkMove(move) {
       (idx2-1 !== idx1 && this.grid[idx2 -1].classList.length > 1)){
       return false} 
   }
-  else if (move === 8 && !this.checkCollisions()){
-    return false
+  else if (move === 8){
+    if (idx1+8 > 127 || 
+      idx2+8 > 127  ||
+      (idx1+8 !== idx2 && this.grid[idx1 +8].classList.length > 1) ||
+      (idx2+8 !== idx1 && this.grid[idx2 +8].classList.length > 1)){
+      return false} 
   } 
   return true
 }
@@ -113,17 +118,8 @@ Game.prototype.checkRotate = function checkRotate() {
   return true
 }
 
-Game.prototype.checkRemove = function checkRemove(idx1, idx2){
-  if(this.currentPill.horizontal){
-    return this.inefhorizontalCheck(idx1).concat(
-    this.inefVerticalCheck(idx1).concat(
-    this.inefVerticalCheck(idx2)))
-  } 
-  else{
-    return this.inefhorizontalCheck(idx1).concat(
-    this.inefhorizontalCheck(idx2).concat(
-    this.inefVerticalCheck(idx1)))
-  }
+Game.prototype.checkRemove = function checkRemove(idx){
+    return this.inefhorizontalCheck(idx).concat(this.inefVerticalCheck(idx))   
 }
 
 Game.prototype.inefhorizontalCheck = function inefhorizontalCheck(idx) {
@@ -133,8 +129,8 @@ Game.prototype.inefhorizontalCheck = function inefhorizontalCheck(idx) {
   let color = null
   for (i=start1; i<start1+8; i++){
     if (this.grid[i].classList.length > 1){
-      color = color ? color : this.grid[i].classList[this.grid[i].classList.length-1]
-      if (this.grid[i].classList[this.grid[i].classList.length-1] === color){
+      color = color ? color : this.grid[i].classList.item(2)
+      if (this.grid[i].classList.item(2) === color){
         streak.push(i)
       }
       else {
@@ -142,7 +138,7 @@ Game.prototype.inefhorizontalCheck = function inefhorizontalCheck(idx) {
           toRemove = toRemove.concat(streak)                       
         }
         streak =[]  
-        color = this.grid[i].classList[this.grid[i].classList.length-1]
+        color = this.grid[i].classList.item(2)
         streak.push(i)
       }
     }
@@ -157,6 +153,7 @@ Game.prototype.inefhorizontalCheck = function inefhorizontalCheck(idx) {
   if (streak.length >= 4){
     toRemove = toRemove.concat(streak)                       
   }
+  console.log(toRemove)
   return toRemove
 };
 
@@ -167,8 +164,8 @@ Game.prototype.inefVerticalCheck = function inefVerticalCheck(idx) {
   let color = null
   for (i=start1; i<127; i += 8){
     if (this.grid[i].classList.length > 1){
-      color = color ? color : this.grid[i].classList[this.grid[i].classList.length-1]
-      if (this.grid[i].classList[this.grid[i].classList.length-1] === color){
+      color = color ? color : this.grid[i].classList.item(2)
+      if (this.grid[i].classList.item(2) === color){
         streak.push(i)
       }
       else {
@@ -176,7 +173,7 @@ Game.prototype.inefVerticalCheck = function inefVerticalCheck(idx) {
           toRemove = toRemove.concat(streak)                       
         }
         streak =[]  
-        color = this.grid[i].classList[this.grid[i].classList.length-1]
+        color = this.grid[i].classList.item(2)
         streak.push(i)
       }
     }
@@ -191,22 +188,28 @@ Game.prototype.inefVerticalCheck = function inefVerticalCheck(idx) {
   if (streak.length >= 4){
     toRemove = toRemove.concat(streak)                    
   }
+  console.log(toRemove)
   return toRemove
 };
 
 
 Game.prototype.remove = function remove(arr) {
   arr.forEach(idx => {
-    this.grid[idx].classList.toggle('virus', false)
-    this.grid[idx].classList.toggle('cornflowerblue', false)
-    this.grid[idx].classList.toggle('salmon', false)
-    this.grid[idx].classList.toggle('bisque', false)
-    this.grid[idx].classList.toggle('pill', false)
+    this.grid[idx].classList.remove(
+      'virus', 'pill', 'cornflowerblue', 'bisque',
+      'salmon', 'minHor', 'minVer', 'maxHor', 'maxVer'
+    )
   })
 };
 
 Game.prototype.moveObjects = function moveObjects(delta) {
   if (this.currentPill) this.currentPill.move()
+  else{
+    this.pills.forEach(pill => {
+      console.log('pill')
+    })
+    this.addPill()
+  }
 };
 
 Game.prototype.step = function step(delta) {
@@ -215,7 +218,7 @@ Game.prototype.step = function step(delta) {
     this.remove(this.toRemove)
     this.toRemove = null
   }
-  if (!this.currentPill) this.addPill()
+  // if (!this.currentPill) this.addPill()
 };
 
 Game.prototype.gameOver = function gameOver(){

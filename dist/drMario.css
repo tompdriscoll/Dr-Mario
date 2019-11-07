@@ -29,7 +29,6 @@ body{
 }
 
 .virus{
-    border-radius: 15px;
     z-index: 2;
 }
 
@@ -49,6 +48,23 @@ body{
 
 .bisque{
     background: rgb(255, 230, 0);
+}
+
+.minHor{
+    border-radius: 5px 0 0 5px;
+}
+
+.maxHor{
+    border-radius: 0 5px 5px 0;
+    
+}
+
+.minVer{
+    border-radius: 5px 5px 0 0;
+}
+
+.maxVer{
+    border-radius: 0 0 5px 5px;
 }
 
 #dr{

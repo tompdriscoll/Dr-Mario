@@ -29,7 +29,7 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 
 GameView.prototype.start = function start() {
   switchScreen()
-  this.game = new Game(this.grid);
+  this.game = new Game(this.grid); 
   var gameLoop = setInterval(() => {
     this.bindKeyHandlers();
     this.game.step(); 
@@ -59,6 +59,10 @@ GameView.prototype.clearGrid = function clearGrid(){
 
 function switchScreen(){
   Array.from(document.getElementsByClassName('toHide')).forEach(ele => ele.classList.toggle('hidden'))
+  key.unbind('space')
+  key.unbind('left')
+  key.unbind('right')
+  key.unbind('down')
 }
 
 module.exports = GameView;
