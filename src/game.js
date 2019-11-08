@@ -1,6 +1,11 @@
 const Virus = require("./virus")
 const Pill = require("./pill");
 
+Game.MOVES = {
+  left: -1,
+  down: 8,
+  right: 1,
+};
 
 function Game(grid) {
   this.pills = [];
@@ -38,8 +43,10 @@ Game.prototype.addPill = function addPill() {
     game: this
   });
   this.currentPill = pill
+  // this.bindKeyHandlers()
   if (!this.checkCollisions()) return this.gameOver()
   this.add(pill);
+  // this.bindKeyHandlers()
   return pill;
 
 }; 
@@ -224,6 +231,21 @@ Game.prototype.step = function step(delta) {
 Game.prototype.gameOver = function gameOver(){
   this.winLose = true
 }
+
+// Game.prototype.bindKeyHandlers = function bindKeyHandlers() {
+//   key.unbind('space')
+//   key.unbind('left')
+//   key.unbind('right')
+//   key.unbind('down')
+//   debugger
+
+//   Object.keys(Game.MOVES).forEach(function(k)  {
+//     const move = Game.MOVES[k];
+//     key(k, function () { this.currentPill.control(move); });
+//   });
+
+//     key("space", function () { this.currentPill.rotate(); });
+// };
 
 
 

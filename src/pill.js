@@ -10,6 +10,7 @@ function Pill(options){
     this.collided = false
     this.horizontal = true
     this.placeOnGrid()
+    
 }
 
 Pill.prototype.placeOnGrid = function placeOnGrid(){ 
@@ -32,7 +33,7 @@ Pill.prototype.placeOnGrid = function placeOnGrid(){
 
 Pill.prototype.move = function move() {
     this.game.checkCollisions(this)
-    
+
     this.placeOnGrid()
     if(!this.collided){
         if (this.game.checkMove(8) && !this.collided){

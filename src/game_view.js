@@ -31,8 +31,8 @@ GameView.prototype.start = function start() {
   switchScreen()
   this.game = new Game(this.grid); 
   var gameLoop = setInterval(() => {
-    this.bindKeyHandlers();
     this.game.step(); 
+    this.bindKeyHandlers();
     if (this.game.winLose) {
       this.clearGrid()
       this.game = null
@@ -59,10 +59,10 @@ GameView.prototype.clearGrid = function clearGrid(){
 
 function switchScreen(){
   Array.from(document.getElementsByClassName('toHide')).forEach(ele => ele.classList.toggle('hidden'))
-  key.unbind('space')
-  key.unbind('left')
-  key.unbind('right')
-  key.unbind('down')
+  // key.unbind('space')
+  // key.unbind('left')
+  // key.unbind('right')
+  // key.unbind('down')
 }
 
 module.exports = GameView;
