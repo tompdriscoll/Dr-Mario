@@ -53,25 +53,33 @@ Game.prototype.allObjects = function allObjects() {
 
 Game.prototype.checkCollisions = function checkCollisions(pill=this.currentPill) {
   
-  let check1 = pill.idx1 + 8
-  let check2  = pill.idx2 + 8
-  if (check1 >= 128 ||  check2 >= 128) {
-    pill.collided = true
-    this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))   
-    this.currentPill = null
-    return false
-  }
-  else if (this.grid[check1].classList.length > 1 && (check1 !== pill.idx2)){
-    pill.collided = true
-    this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))    
-    this.currentPill = null
-    return false
-  }
-  else if(this.grid[check2].classList.length > 1 && (check2 !== pill.idx1)){
-    pill.collided = true
-    this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))  
-    this.currentPill = null
-    return false
+  if (pill.idx2) {
+    let check1 = pill.idx1 + 8
+    let check2  = pill.idx2 + 8
+    if (check1 >= 128 ||  check2 >= 128) {
+      pill.collided = true
+      this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))   
+      this.currentPill = null
+      return false
+    }
+    else if (this.grid[check1].classList.length > 1 && (check1 !== pill.idx2)){
+      pill.collided = true
+      this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))    
+      this.currentPill = null
+      return false
+    }
+    else if(this.grid[check2].classList.length > 1 && (check2 !== pill.idx1)){
+      pill.collided = true
+      this.toRemove = this.checkRemove(pill.idx1).concat(this.checkRemove(pill.idx2))  
+      this.currentPill = null
+      return false
+    }
+  } else if (pill.idx) {
+    let check1 = pill.idx + 8
+    if (check1 >= 128 || this.grid[check1].classList.length > 1){
+      pill.collided = true
+      return false
+    }
   }
   return true
 };
@@ -205,15 +213,20 @@ Game.prototype.remove = function remove(arr) {
 };
 
 Game.prototype.moveObjects = function moveObjects(delta) {
-  if (this.currentPill) this.currentPill.move()
-  else{
-    
-    this.addPill()
+  if (this.currentPill) {
+    this.currentPill.move()
+  } else{
+    if (!this.floaters.every(floater => floater.collided)){
+    this.floaters.forEach(floater => {
+      floater.move()
+     })
+    } else {
+      this.addPill()
+    }
   }
 };
 
 Game.prototype.step = function step(delta) {
-  
   this.moveObjects();
   if (this.toRemove) {
     this.remove(this.toRemove)
@@ -228,7 +241,6 @@ Game.prototype.gameOver = function gameOver(){
 } 
 
 Game.prototype.checkForFloaters = function checkForFloaters(){
-  console.log('here')
   this.pills = this.pills.filter(pill => {
    let list1 = this.grid[pill.idx1].classList.contains('pill')
    let list2 = this.grid[pill.idx2].classList.contains('pill')
@@ -245,6 +257,7 @@ Game.prototype.checkForFloaters = function checkForFloaters(){
    }
    return true
   })
+
 }
 
 
