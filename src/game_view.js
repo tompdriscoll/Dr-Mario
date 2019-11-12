@@ -2,9 +2,10 @@ const Game = require("./game");
 
 function GameView() {
   this.game = null;
-  this.interval = 600
+  this.interval = 500
   this.grid = document.getElementsByClassName('grid-square-square')
   this.levelUp = 0
+  this.music = null
 }
 
 GameView.MOVES = {
@@ -30,19 +31,24 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 
 GameView.prototype.start = function start() {
   switchScreen()
+  this.setSpeedMusic()
   let thisLevel = document.getElementById('level-slider').value - 0
   thisLevel += this.levelUp
   this.game = new Game(this.grid, thisLevel); 
+  this.music.load()
   var gameLoop = setInterval(() => {
+    this.music.play()
     this.game.step(); 
     this.bindKeyHandlers();
     if (this.game.lose) {
+      this.music.pause()
       this.clearGrid()
       this.game = null
       clearInterval(gameLoop)
       switchScreen()
       this.splash()
     } else if (this.game.win) {
+      this.music.pause()
       key.unbind('space')
       this.clearGrid()
       this.game = null
@@ -62,6 +68,11 @@ GameView.prototype.nextLevel = function nextLevel(){
 
 GameView.prototype.splash = function splash(){ 
   key("space",  this.start.bind(this));
+}
+
+GameView.prototype.setSpeedMusic = function setSpeedMusic(){
+  this.music = document.getElementById(Array.from(document.getElementById('music-picker-div').children).filter(ele => ele.checked === true)[0].value)
+  this.interval = Array.from(document.getElementById('speed-picker-div').children).filter(ele => ele.checked === true)[0].value - 0
 }
 
 GameView.prototype.clearGrid = function clearGrid(){
