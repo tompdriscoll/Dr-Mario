@@ -29,6 +29,7 @@ Pill.prototype.placeOnGrid = function placeOnGrid(){
         squares[min].classList.toggle(`minVer`)
         squares[max].classList.toggle(`maxVer`)  
     }
+    
 }
 
 Pill.prototype.move = function move() {

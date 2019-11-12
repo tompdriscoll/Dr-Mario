@@ -32,6 +32,11 @@ body{
     z-index: 2;
 }
 
+.floater{
+
+    border-radius: 15px;
+}
+
 .grid-square-square{
     height: 15px;
     width: 15px;
@@ -113,4 +118,15 @@ body{
 .controls:first-of-type{
     margin-top: 25px;
     margin-bottom: 10px;
+}
+
+.nextLevel{
+    color: white;
+}
+
+#next-level-div{
+    position: absolute;
+    align-self: center;
+    top: 360px;
+    width: 100px;
 }

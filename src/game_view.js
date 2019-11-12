@@ -2,8 +2,9 @@ const Game = require("./game");
 
 function GameView() {
   this.game = null;
-  this.interval = 1000
+  this.interval = 600
   this.grid = document.getElementsByClassName('grid-square-square')
+  this.levelUp = 0
 }
 
 GameView.MOVES = {
@@ -29,19 +30,35 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 
 GameView.prototype.start = function start() {
   switchScreen()
-  this.game = new Game(this.grid); 
+  let thisLevel = document.getElementById('level-slider').value - 0
+  thisLevel += this.levelUp
+  this.game = new Game(this.grid, thisLevel); 
   var gameLoop = setInterval(() => {
     this.game.step(); 
     this.bindKeyHandlers();
-    if (this.game.winLose) {
+    if (this.game.lose) {
       this.clearGrid()
       this.game = null
       clearInterval(gameLoop)
       switchScreen()
       this.splash()
+    } else if (this.game.win) {
+      key.unbind('space')
+      this.clearGrid()
+      this.game = null
+      clearInterval(gameLoop)
+      document.getElementById('next-level-div').classList.toggle('hidden')
+      key("space",  this.nextLevel.bind(this));
     }
   }, this.interval);
 };
+
+GameView.prototype.nextLevel = function nextLevel(){
+  document.getElementById('next-level-div').classList.toggle('hidden')
+  this.levelUp += 1
+  switchScreen()
+  this.start()
+}
 
 GameView.prototype.splash = function splash(){ 
   key("space",  this.start.bind(this));
@@ -49,20 +66,19 @@ GameView.prototype.splash = function splash(){
 
 GameView.prototype.clearGrid = function clearGrid(){
   Array.from(this.grid).forEach(ele => {
-    ele.classList.toggle('virus', false)
-    ele.classList.toggle('cornflowerblue', false)
-    ele.classList.toggle('salmon', false)
-    ele.classList.toggle('bisque', false)
-    ele.classList.toggle('pill', false)
-  })
+    ele.classList.remove(
+      'virus', 'pill', 'cornflowerblue', 'bisque',
+      'salmon', 'minHor', 'minVer', 'maxHor', 'maxVer', 'floater'
+    )})
+
 }
 
 function switchScreen(){
   Array.from(document.getElementsByClassName('toHide')).forEach(ele => ele.classList.toggle('hidden'))
   key.unbind('space')
-  // key.unbind('left')
-  // key.unbind('right')
-  // key.unbind('down')
+  key.unbind('left')
+  key.unbind('right')
+  key.unbind('down')
 }
 
 module.exports = GameView;

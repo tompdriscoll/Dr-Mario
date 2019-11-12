@@ -2,17 +2,19 @@ const Virus = require("./virus")
 const Pill = require("./pill");
 const Floater = require("./floater")
 
-function Game(grid) {
+function Game(grid, level) {
   this.pills = [];
   this.viruses = [];
   this.floaters = [];
   this.toRemove = null;
   this.currentPill = null
-  this.level = document.getElementById('level-slider').value;
+  this.level = level
+  this.virusCount = this.level
   this.grid = grid
   this.addPill()
   this.addViruses()
-  this.winLose = false
+  this.win = false
+  this.lose = false
 }
 
 Game.prototype.add = function add(object) {
@@ -78,6 +80,7 @@ Game.prototype.checkCollisions = function checkCollisions(pill=this.currentPill)
     let check1 = pill.idx + 8
     if (check1 >= 128 || this.grid[check1].classList.length > 1){
       pill.collided = true
+      this.toRemove = this.checkRemove(pill.idx)
       return false
     }
   }
@@ -205,9 +208,10 @@ Game.prototype.inefVerticalCheck = function inefVerticalCheck(idx) {
 
 Game.prototype.remove = function remove(arr) {
   arr.forEach(idx => {
+    if (this.grid[idx].classList.contains('virus')) this.virusCount -= 1;
     this.grid[idx].classList.remove(
       'virus', 'pill', 'cornflowerblue', 'bisque',
-      'salmon', 'minHor', 'minVer', 'maxHor', 'maxVer'
+      'salmon', 'minHor', 'minVer', 'maxHor', 'maxVer', 'floater'
     )
   })
 };
@@ -227,18 +231,22 @@ Game.prototype.moveObjects = function moveObjects(delta) {
 };
 
 Game.prototype.step = function step(delta) {
+  this.checkWin();
   this.moveObjects();
   if (this.toRemove) {
     this.remove(this.toRemove)
     this.checkForFloaters();
     this.toRemove = null
   }
-  // if (!this.currentPill) this.addPill()
 };
 
 Game.prototype.gameOver = function gameOver(){
-  this.winLose = true
+  this.lose = true
 } 
+
+Game.prototype.checkWin = function checkWin(){
+  if (this.virusCount === 0) this.win = true
+}
 
 Game.prototype.checkForFloaters = function checkForFloaters(){
   this.pills = this.pills.filter(pill => {
