@@ -21,6 +21,7 @@ function Virus(options){
         return [x2, y2]
   }
 
+ 
   function randomColor() {
     const possibleColors = ['cornflowerblue', 'salmon', 'bisque']  
     color = possibleColors[Math.floor((Math.random() * 3))];

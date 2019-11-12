@@ -1,15 +1,11 @@
 const Virus = require("./virus")
 const Pill = require("./pill");
-
-Game.MOVES = {
-  left: -1,
-  down: 8,
-  right: 1,
-};
+const Floater = require("./floater")
 
 function Game(grid) {
   this.pills = [];
   this.viruses = [];
+  this.floaters = [];
   this.toRemove = null;
   this.currentPill = null
   this.level = document.getElementById('level-slider').value;
@@ -110,6 +106,7 @@ Game.prototype.checkMove = function checkMove(move) {
 
 Game.prototype.checkRotate = function checkRotate() {
   let pill = this.currentPill
+  if (pill.idx1 < 8) return false;
   if (this.currentPill.horizontal) {
     let less = pill.idx1 > pill.idx2 ? pill.idx2 : pill.idx1
     if (this.grid[less-8] && this.grid[less - 8].classList.length > 1){
@@ -160,7 +157,6 @@ Game.prototype.inefhorizontalCheck = function inefhorizontalCheck(idx) {
   if (streak.length >= 4){
     toRemove = toRemove.concat(streak)                       
   }
-  console.log(toRemove)
   return toRemove
 };
 
@@ -195,7 +191,6 @@ Game.prototype.inefVerticalCheck = function inefVerticalCheck(idx) {
   if (streak.length >= 4){
     toRemove = toRemove.concat(streak)                    
   }
-  console.log(toRemove)
   return toRemove
 };
 
@@ -212,17 +207,17 @@ Game.prototype.remove = function remove(arr) {
 Game.prototype.moveObjects = function moveObjects(delta) {
   if (this.currentPill) this.currentPill.move()
   else{
-    this.pills.forEach(pill => {
-      console.log('pill')
-    })
+    
     this.addPill()
   }
 };
 
 Game.prototype.step = function step(delta) {
+  
   this.moveObjects();
   if (this.toRemove) {
     this.remove(this.toRemove)
+    this.checkForFloaters();
     this.toRemove = null
   }
   // if (!this.currentPill) this.addPill()
@@ -230,22 +225,27 @@ Game.prototype.step = function step(delta) {
 
 Game.prototype.gameOver = function gameOver(){
   this.winLose = true
+} 
+
+Game.prototype.checkForFloaters = function checkForFloaters(){
+  console.log('here')
+  this.pills = this.pills.filter(pill => {
+   let list1 = this.grid[pill.idx1].classList.contains('pill')
+   let list2 = this.grid[pill.idx2].classList.contains('pill')
+   if (!list1 || !list2){
+      if (!list1 && !list2){
+        return false
+      } else if (!list1){
+        this.floaters.push(new Floater({game: pill.game, color: pill.color2, idx: pill.idx2, grid: this.grid}))
+        return false
+      } else if (!list2){
+        this.floaters.push(new Floater({game: pill.game, color: pill.color1, idx: pill.idx1, grid: this.grid}))
+        return false
+      }
+   }
+   return true
+  })
 }
-
-// Game.prototype.bindKeyHandlers = function bindKeyHandlers() {
-//   key.unbind('space')
-//   key.unbind('left')
-//   key.unbind('right')
-//   key.unbind('down')
-//   debugger
-
-//   Object.keys(Game.MOVES).forEach(function(k)  {
-//     const move = Game.MOVES[k];
-//     key(k, function () { this.currentPill.control(move); });
-//   });
-
-//     key("space", function () { this.currentPill.rotate(); });
-// };
 
 
 
