@@ -9,7 +9,7 @@ function Game(grid, level) {
   this.toRemove = null;
   this.currentPill = null
   this.level = level
-  this.virusCount = this.level
+  this.virusCount = this.level * 4
   this.grid = grid
   this.addPill()
   this.addViruses()
@@ -30,7 +30,7 @@ Game.prototype.add = function add(object) {
 };
 
 Game.prototype.addViruses = function addViruses() {
-  for (let i = 0; i < this.level; i++) {
+  for (let i = 0; i < this.virusCount; i++) {
     this.add(new Virus({ game: this }));
   }
 };

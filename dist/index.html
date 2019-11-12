@@ -6,6 +6,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./drMario.css">
+        <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
     </head>
     <body>
         <audio id='fever' src="./Fever Dr. Mario Music.mp3" volume="0.000" ></audio>
@@ -416,17 +417,29 @@
             </div>
         </div> 
         <div id='level-picker-div'>
-            <h2 id='level-picker' class='prompt toHide'>Pick a level</h2>
-            <input id='level-slider' class='toHide' type="range" min='0' max='20'>
-            <h4 class='toHide' id='level-value'>10</h4>
+            <h1 id='level-picker' class='prompt toHide'>Virus level</h1>
+            <input id='level-slider' class='toHide' type="range" min='1' max='19' value='1'>
+            <h4 class='toHide' id='level-value'>1</h4>
         </div>    
+        <div id='speed-picker-div' class='toHide'>
+            <h1 class='toHide' >Speed</h1>
+            <input  class='toHide' type="radio" name="speed" value="LOW"> <p class='toHide'>LOW</p>
+            <input  class='toHide' type="radio" name="speed" value="MED"> <p class='toHide'>MED</p>
+            <input  class='toHide' type="radio" name="speed" value="HI"> <p class='toHide'>HI</p>
+        </div> 
+        <div id='music-picker-div' class='toHide'>
+            <h1 class='toHide' > Music</h1>
+            <input  class='toHide' type="radio" name="music" value="fever"> <p class='toHide'>FEVER</p>
+            <input  class='toHide' type="radio" name="music" value="chill"> <p class='toHide'>CHILL</p>
+            <input  class='toHide' type="radio" name="music" value="none"> <p class='toHide'>NONE</p>
+        </div> 
         <h1 id='spaceTo' class="toHide prompt">Press Space to Start</h1>
         <h2 class='hidden toHide controls'>Arrow Keys: Move Pill</h2>
         <h2 class='hidden toHide controls'>Space: Rotate Pill</h2>
         <div id='next-level-div' class='hidden'>
-            <h3 class='nextLevel'>Stage Clear</h3>
-            <h3 class='nextLevel'>Next Level?</h3>
-            <h3 class='nextLevel'>Hit Space</h3>
+            <h2 class='nextLevel'>Stage Clear</h2>
+            <h2 class='nextLevel'>Next Level?</h2>
+            <h2 class='nextLevel'>Hit Space</h2>
         </div>
     </body>
 </html>

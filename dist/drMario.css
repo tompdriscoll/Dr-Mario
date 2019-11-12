@@ -7,6 +7,15 @@ body{
     margin: auto;
 }
 
+h1, h2, h3, p{
+    font-family: 'VT323', monospace;
+}
+
+p{
+    font-size: 32px;
+    
+}
+
 #top{
     background: url('./background.png') no-repeat;
     height: 350px;
@@ -87,7 +96,9 @@ body{
 
 #spaceTo{
     align-self: center;
-    margin-top: 30%;
+    margin-top: 10%;
+    animation: blink-animation 1.3s steps(5, start) infinite;
+    
 }
 
 #level-value{
@@ -103,16 +114,39 @@ body{
     margin-left: 20px
 }
 
+#level-picker{
+    margin: 0;
+}
 #level-picker-div{
     display: flex;
     flex-wrap: wrap;
     margin: auto;
 }
 
+#music-picker-div, #speed-picker-div, #level-picker-div{
+    color: white;
+    margin: auto;
+    display: flex;
+    width: 350px;
+    flex-wrap: wrap;
+    margin: auto;
+    align-items: center;
+}
+
+#music-picker-div h1, #speed-picker-div h1, #level-picker-div h1{
+    width: 350px;
+    color: #e6005a;
+}
+
+#music-picker-div input, #speed-picker-div input{
+    margin: 0 20px;
+}
+
+
 .controls{
     color: white;
     margin: auto;
-    font-size: 18px;
+  
 }
 
 .controls:first-of-type{
@@ -130,3 +164,17 @@ body{
     top: 360px;
     width: 100px;
 }
+
+@keyframes flash {
+    0%   {color: white;}
+    49%{    color: transparent; }
+    50%{    color: transparent; }
+    99%{    color:transparent;  }
+    100% {color: white;}
+  }
+
+  @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
