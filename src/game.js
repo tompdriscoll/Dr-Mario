@@ -15,6 +15,7 @@ function Game(grid, level) {
   this.addViruses()
   this.win = false
   this.lose = false
+  this.score = 0
 }
 
 Game.prototype.add = function add(object) {
@@ -231,11 +232,11 @@ Game.prototype.moveObjects = function moveObjects(delta) {
 };
 
 Game.prototype.step = function step(delta) {
-  debugger
   this.checkWin();
   this.moveObjects();
+  document.getElementById('score').textContent = this.score
   if (this.toRemove) {
-    debugger
+    this.score += (this.toRemove.length * 100)
     this.remove(this.toRemove)
     this.checkForFloaters();
     this.toRemove = null

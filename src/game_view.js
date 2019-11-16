@@ -35,6 +35,7 @@ GameView.prototype.start = function start() {
   let thisLevel = document.getElementById('level-slider').value - 0
   thisLevel += this.levelUp
   this.game = new Game(this.grid, thisLevel); 
+  document.getElementById('lvl').textContent = thisLevel
   this.music.load()
   var gameLoop = setInterval(() => {
     this.music.play()

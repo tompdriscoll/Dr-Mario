@@ -5,6 +5,7 @@ body{
     justify-content: center;
     width: fit-content;
     margin: auto;
+    font-family: 'VT323', monospace;
 }
 
 h1, h2, h3, p{
@@ -22,6 +23,10 @@ svg{
     width: 100px;
 }
 
+svg:hover{
+    cursor: pointer;
+}
+
 #top{
     background: url('./background.png') no-repeat;
     height: 350px;
@@ -36,7 +41,7 @@ svg{
     grid-template-columns: repeat(8, 15px);
     width: fit-content;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 60px;
 }
 
 .hidden{
@@ -117,7 +122,8 @@ svg{
 
 #level-value{
     width: 40px;
-    margin-left: 20px
+    margin-left: 20px;
+    font-size: 24px;
 }
 
 #level-picker{
@@ -175,6 +181,11 @@ svg{
 #svg-links{
     display: flex;
     justify-content: space-evenly;
+    margin-top: 5vh;
+}
+
+#github-svg{
+    fill: #0073ef
 }
 
 #linkedin-svg{
@@ -182,7 +193,31 @@ svg{
 }
 
 #angellist-svg{
-    fill: cornsilk;
+   fill: rgb(255, 230, 0);
+}
+
+#lvl{
+    height: 15px;
+    width: 89px;
+    position: relative;
+    background: #d7d7ff;
+    left: 340px;
+    top: 233px;
+    padding: 2px;
+    text-align: end;
+    font-size: 28px;
+}
+
+#score {
+    height: 15px;
+    width: 102px;
+    position: relative;
+    background: #d7d7ff;
+    left: 28px;
+    top: 114px;
+    padding: 3px;
+    text-align: end;
+    font-size: 28px;
 }
 
 @keyframes flash {

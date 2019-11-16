@@ -13,8 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById('level-value').textContent =  slider.value
     })
     let radio = document.getElementsByTagName("input")[4]
-    debugger
-    radio.on("mousedown", function(event) {
+    radio.addEventListener("mousedown", function(event) {
       event.preventDefault()
     })
     new GameView().splash();
