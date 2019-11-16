@@ -16,6 +16,12 @@ p{
     margin: 0;
 }
 
+svg{
+    
+    height: 100px;
+    width: 100px;
+}
+
 #top{
     background: url('./background.png') no-repeat;
     height: 350px;
@@ -131,6 +137,7 @@ p{
     flex-wrap: wrap;
     margin: auto;
     align-items: center;
+    justify-content: center
 }
 
 #music-picker-div h1, #speed-picker-div h1, #level-picker-div h1{
@@ -163,6 +170,19 @@ p{
     align-self: center;
     top: 360px;
     width: 100px;
+}
+
+#svg-links{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#linkedin-svg{
+    fill: #e6005a;
+}
+
+#angellist-svg{
+    fill: cornsilk;
 }
 
 @keyframes flash {

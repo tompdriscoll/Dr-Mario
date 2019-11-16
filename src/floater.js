@@ -20,7 +20,7 @@ Floater.prototype.placeOnGrid = function placeOnGrid(){
     this.grid[this.idx].classList.toggle('floater')
     this.grid[this.idx].classList.toggle(`${this.color}`)  
 }
-
+ 
 Floater.prototype.move = function move() {
     this.game.checkCollisions(this)
 

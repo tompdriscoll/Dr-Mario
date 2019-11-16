@@ -231,9 +231,11 @@ Game.prototype.moveObjects = function moveObjects(delta) {
 };
 
 Game.prototype.step = function step(delta) {
+  debugger
   this.checkWin();
   this.moveObjects();
   if (this.toRemove) {
+    debugger
     this.remove(this.toRemove)
     this.checkForFloaters();
     this.toRemove = null
