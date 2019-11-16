@@ -126,7 +126,7 @@ eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\n\nfunc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\")\n\n\n\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n    let fever = document.getElementById('fever')\n    let chill = document.getElementById('chill')\n    chill.volume = 0.1\n    fever.volume = 0.1\n    let slider = document.getElementById('level-slider')\n    slider.addEventListener( 'input', function () {\n      document.getElementById('level-value').textContent =  slider.value\n    })\n    let radio = document.getElementsByTagName(\"input\")[4]\n    radio.addEventListener(\"mousedown\", function(event) {\n      event.preventDefault()\n    })\n    new GameView().splash();\n  });\n  \n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const GameView = __webpack_require__(/*! ./game_view */ \"./src/game_view.js\")\n\n\n\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n    let fever = document.getElementById('fever')\n    let chill = document.getElementById('chill')\n    chill.volume = 0.1\n    fever.volume = 0.1\n    let slider = document.getElementById('level-slider')\n    // debugger\n    let radio = Array.from(document.getElementsByTagName(\"input\"))\n    radio.slice(1, radio.length).forEach(input => {\n      input.addEventListener(\"mousedown\", function(event) {\n        event.preventDefault()\n      })\n    })\n    slider.addEventListener( 'input', function (event) {\n      document.getElementById('level-value').textContent =  slider.value\n    })\n    new GameView().splash();\n  });\n  \n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 

@@ -9,12 +9,15 @@ document.addEventListener("DOMContentLoaded", function () {
     chill.volume = 0.1
     fever.volume = 0.1
     let slider = document.getElementById('level-slider')
-    slider.addEventListener( 'input', function () {
-      document.getElementById('level-value').textContent =  slider.value
+    // debugger
+    let radio = Array.from(document.getElementsByTagName("input"))
+    radio.slice(1, radio.length).forEach(input => {
+      input.addEventListener("mousedown", function(event) {
+        event.preventDefault()
+      })
     })
-    let radio = document.getElementsByTagName("input")[4]
-    radio.addEventListener("mousedown", function(event) {
-      event.preventDefault()
+    slider.addEventListener( 'input', function (event) {
+      document.getElementById('level-value').textContent =  slider.value
     })
     new GameView().splash();
   });
