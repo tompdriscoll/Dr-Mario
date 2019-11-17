@@ -238,7 +238,7 @@ Game.prototype.step = function step(delta) {
   if (this.toRemove) {
     this.score += (this.toRemove.length * 100)
     this.remove(this.toRemove)
-    this.checkForFloaters();
+    this.handleFloaters();
     this.toRemove = null
   }
 };
@@ -251,7 +251,10 @@ Game.prototype.checkWin = function checkWin(){
   if (this.virusCount === 0) this.win = true
 }
 
-Game.prototype.checkForFloaters = function checkForFloaters(){
+Game.prototype.handleFloaters = function handleFloaters(){
+  this.floaters = this.floaters.filter(floater => {
+    return this.grid[floater.idx].classList.contains('floater')
+  })
   this.pills = this.pills.filter(pill => {
    let list1 = this.grid[pill.idx1].classList.contains('pill')
    let list2 = this.grid[pill.idx2].classList.contains('pill')

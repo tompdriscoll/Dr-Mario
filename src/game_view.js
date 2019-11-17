@@ -6,6 +6,7 @@ function GameView() {
   this.grid = document.getElementsByClassName('grid-square-square')
   this.levelUp = 0
   this.music = null
+  this.debug = this.debug.bind(this)
 }
 
 GameView.MOVES = {
@@ -19,7 +20,8 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
   key.unbind('left')
   key.unbind('right')
   key.unbind('down')
-
+  let that = this
+  key('a', this.debug)
   let pill = this.game.currentPill
   Object.keys(GameView.MOVES).forEach(function(k)  {
     const move = GameView.MOVES[k];
@@ -28,6 +30,9 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 
     key("space", function () { pill.rotate(); });
 };
+GameView.prototype.debug = function debug(){
+  debugger
+}
 
 GameView.prototype.start = function start() {
   switchScreen()
