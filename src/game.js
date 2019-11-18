@@ -235,6 +235,7 @@ Game.prototype.step = function step(delta) {
   this.checkWin();
   this.moveObjects();
   document.getElementById('score').textContent = this.score
+  document.getElementById('virus-count').textContent = this.virusCount
   if (this.toRemove) {
     this.score += (this.toRemove.length * 100)
     this.remove(this.toRemove)
