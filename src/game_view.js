@@ -42,8 +42,10 @@ GameView.prototype.start = function start() {
   thisLevel += this.levelUp
   this.game = new Game(this.grid, thisLevel); 
   document.getElementById('lvl').textContent = thisLevel
+  document.getElementById('top-score').textContent = this.topScore
   this.music.load()
   var gameLoop = setInterval(() => {
+    document.getElementById('virus-count')
     this.music.play()
     this.game.step(); 
     this.bindKeyHandlers();
