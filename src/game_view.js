@@ -7,6 +7,7 @@ function GameView() {
   this.levelUp = 0
   this.music = null
   this.debug = this.debug.bind(this)
+  this.topScore = 10000
 }
 
 GameView.MOVES = {
@@ -57,6 +58,7 @@ GameView.prototype.start = function start() {
       this.music.pause()
       key.unbind('space')
       this.clearGrid()
+      this.topScore = this.topScore > this.game.score ? this.topScore : this.game.score
       this.game = null
       clearInterval(gameLoop)
       document.getElementById('next-level-div').classList.toggle('hidden')
@@ -78,7 +80,9 @@ GameView.prototype.splash = function splash(){
 
 GameView.prototype.setSpeedMusic = function setSpeedMusic(){
   this.music = document.getElementById(Array.from(document.getElementById('music-picker-div').children).filter(ele => ele.checked === true)[0].value)
-  this.interval = Array.from(document.getElementById('speed-picker-div').children).filter(ele => ele.checked === true)[0].value - 0
+  let speed = Array.from(document.getElementById('speed-picker-div').children).filter(ele => ele.checked === true)[0]
+  this.interval = speed.value - 0
+  document.getElementById('speed').innerText = speed.nextElementSibling.innerText
 }
 
 GameView.prototype.clearGrid = function clearGrid(){
