@@ -41,7 +41,7 @@ svg:hover{
     grid-template-columns: repeat(8, 15px);
     width: fit-content;
     margin: auto;
-    margin-top: 60px;
+    margin-top: -3px;
 }
 
 .hidden{
