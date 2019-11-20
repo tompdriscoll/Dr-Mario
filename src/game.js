@@ -85,12 +85,13 @@ Game.prototype.checkCollisions = function checkCollisions(pill=this.currentPill)
       return false
     }
   }
+  pill.collided = false
   return true
 };
 
-Game.prototype.checkMove = function checkMove(move) {
-  let idx1 = this.currentPill.idx1
-  let idx2 = this.currentPill.idx2
+Game.prototype.checkMove = function checkMove(move, pill) {
+  let idx1 = pill.idx1
+  let idx2 = pill.idx2
   if (move === 1){
     if (idx1%8 === 7 ||
        idx2%8 === 7 ||
@@ -221,12 +222,17 @@ Game.prototype.moveObjects = function moveObjects(delta) {
   if (this.currentPill) {
     this.currentPill.move()
   } else{
-    if (!this.floaters.every(floater => floater.collided)){
-    this.floaters.forEach(floater => {
-      floater.move()
+   
+    let movers = this.pills.concat(this.floaters)
+    movers.forEach(mover => {
+      this.checkCollisions(mover)
+    })
+    if (!movers.every(mover => mover.collided)) {
+      movers.forEach(mover => {
+      mover.move()
      })
     } else {
-      this.addPill()
+    this.addPill()   
     }
   }
 };

@@ -36,11 +36,9 @@ Pill.prototype.move = function move() {
     this.game.checkCollisions(this)
 
     this.placeOnGrid()
-    if(!this.collided){
-        if (this.game.checkMove(8) && !this.collided){
-            this.idx1 += 8
-            this.idx2 += 8
-        }
+    if(!this.collided){       
+        this.idx1 += 8
+        this.idx2 += 8       
     }
     this.placeOnGrid()  
 }
@@ -48,7 +46,7 @@ Pill.prototype.move = function move() {
 Pill.prototype.control = function control(move){  
     if(!this.collided){
         this.placeOnGrid()
-        if (this.game.checkMove(move) && !this.collided){
+        if (this.game.checkMove(move, this) && !this.collided){
             this.idx1 += move
             this.idx2 += move
         }
