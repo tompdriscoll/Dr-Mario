@@ -46,7 +46,7 @@ Pill.prototype.move = function move() {
 Pill.prototype.control = function control(move){  
     if(!this.collided){
         this.placeOnGrid()
-        if (this.game.checkMove(move, this) && !this.collided){
+        if (this.game.checkMove(move) && !this.collided){
             this.idx1 += move
             this.idx2 += move
         }
