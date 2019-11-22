@@ -85,6 +85,7 @@ Game.prototype.checkCollisions = function checkCollisions(pill=this.currentPill)
       return false
     }
   }
+  pill.collided = false
   return true
 };
 
@@ -150,7 +151,7 @@ Game.prototype.inefhorizontalCheck = function inefhorizontalCheck(idx) {
         streak.push(i)
       }
       else {
-        if (streak.length >= 4){
+        if (streak.length >= 4){ 
           toRemove = toRemove.concat(streak)                       
         }
         streak =[]  
