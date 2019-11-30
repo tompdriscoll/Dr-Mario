@@ -29,6 +29,7 @@ Floater.prototype.move = function move() {
         this.idx1 += 8     
     }
     this.placeOnGrid()  
+    this.game.checkCollisions(this)
 }
 
 module.exports = Floater;

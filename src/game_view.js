@@ -23,13 +23,15 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
   key.unbind('down')
   let that = this
   key('a', this.debug)
-  let pill = this.game.currentPill
+  if (this.game.currentPill){
+    let pill = this.game.currentPill
   Object.keys(GameView.MOVES).forEach(function(k)  {
     const move = GameView.MOVES[k];
-    key(k, function () { pill.control(move); });
+     key(k, function () { pill.control(move); });
   });
 
     key("space", function () { pill.rotate(); });
+  }
 };
 GameView.prototype.debug = function debug(){
   debugger

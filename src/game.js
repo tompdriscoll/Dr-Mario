@@ -82,6 +82,7 @@ Game.prototype.checkCollisions = function checkCollisions(pill=this.currentPill)
     if (check1 >= 128 || this.grid[check1].classList.length > 1){
       pill.collided = true
       this.toRemove = this.checkRemove(pill.idx1)
+      debugger
       return false
     }
   }
