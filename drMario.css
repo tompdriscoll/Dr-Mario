@@ -41,7 +41,7 @@ svg:hover{
     grid-template-columns: repeat(8, 15px);
     width: fit-content;
     margin: auto;
-    margin-top: 60px;
+    margin-top: -3px;
 }
 
 .hidden{
@@ -215,6 +215,42 @@ svg:hover{
     background: #d7d7ff;
     left: 28px;
     top: 114px;
+    padding: 3px;
+    text-align: end;
+    font-size: 28px;
+}
+
+#virus-count{
+    height: 15px;
+    width: 88px;
+    position: relative;
+    background: #d7d7ff;
+    left: 340px;
+    top: 262px;
+    padding: 3px;
+    text-align: end;
+    font-size: 28px;
+}
+
+#speed{
+    height: 15px;
+    width: 88px;
+    position: relative;
+    background: #d7d7ff;
+    left: 340px;
+    top: 196px;
+    padding: 3px;
+    text-align: end;
+    font-size: 28px;
+}
+
+#top-score{
+    height: 15px;
+    width: 102px;
+    position: relative;
+    background: #d7d7ff;
+    left: 28px;
+    top: 29px;
     padding: 3px;
     text-align: end;
     font-size: 28px;

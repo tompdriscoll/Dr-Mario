@@ -77,11 +77,11 @@ Game.prototype.checkCollisions = function checkCollisions(pill=this.currentPill)
       this.currentPill = null
       return false
     }
-  } else if (pill.idx) {
-    let check1 = pill.idx + 8
+  } else if (pill.idx1) {
+    let check1 = pill.idx1 + 8
     if (check1 >= 128 || this.grid[check1].classList.length > 1){
       pill.collided = true
-      this.toRemove = this.checkRemove(pill.idx)
+      this.toRemove = this.checkRemove(pill.idx1)
       return false
     }
   }
@@ -222,13 +222,25 @@ Game.prototype.moveObjects = function moveObjects(delta) {
   if (this.currentPill) {
     this.currentPill.move()
   } else{
-    if (!this.floaters.every(floater => floater.collided)){
-    this.floaters.forEach(floater => {
-      floater.move()
-     })
-    } else {
-      this.addPill()
+    let movers = this.pills.concat(this.floaters)
+    for (let i = 120; i>0; i-=8 ){
+      movers.forEach(mover => {
+        if (mover.idx1 >= i && mover.idx1 < i+8){
+          mover.move()
+        }
+      })
+      
     }
+    if (movers.every(mover => mover.collided)) this.addPill();
+    // if (!movers.every(mover => mover.collided)) {
+    //   movers.forEach(mover => {
+    //     mover.move()        
+    //     if (mover.collided) doubleCheck.push(mover)
+    //   })
+    //   doubleCheck.forEach(mover => {mover.move()})
+    // } else {
+    // this.addPill()   
+    // }
   }
 };
 
@@ -236,6 +248,7 @@ Game.prototype.step = function step(delta) {
   this.checkWin();
   this.moveObjects();
   document.getElementById('score').textContent = this.score
+  document.getElementById('virus-count').textContent = this.virusCount
   if (this.toRemove) {
     this.score += (this.toRemove.length * 100)
     this.remove(this.toRemove)
@@ -254,7 +267,7 @@ Game.prototype.checkWin = function checkWin(){
 
 Game.prototype.handleFloaters = function handleFloaters(){
   this.floaters = this.floaters.filter(floater => {
-    return this.grid[floater.idx].classList.contains('floater')
+    return this.grid[floater.idx1].classList.contains('floater')
   })
   this.pills = this.pills.filter(pill => {
    let list1 = this.grid[pill.idx1].classList.contains('pill')
