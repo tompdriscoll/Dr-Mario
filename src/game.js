@@ -8,6 +8,7 @@ function Game(grid, level) {
   this.floaters = [];
   this.toRemove = [];
   this.currentPill = null
+  this.nextPill = null
   this.level = level
   this.virusCount = this.level * 4
   this.grid = grid
