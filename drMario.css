@@ -256,6 +256,16 @@ svg:hover{
     font-size: 28px;
 }
 
+#next-pill{
+    position: relative;
+    height: 15px;
+    width: 30px;
+    background: #e6005a;
+    right: -368px;
+    top: 115px;
+}
+
+
 @keyframes flash {
     0%   {color: white;}
     49%{    color: transparent; }

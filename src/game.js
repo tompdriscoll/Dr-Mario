@@ -42,7 +42,8 @@ Game.prototype.addPill = function addPill() {
   let pill = new Pill({
     game: this
   });
-  this.currentPill = pill
+  this.currentPill = this.nextPill
+  this.nextPill = pill
   // this.bindKeyHandlers()
   if (!this.checkCollisions()) return this.gameOver()
   this.add(pill);
