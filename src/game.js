@@ -266,7 +266,6 @@ Game.prototype.gameOver = function gameOver(){
 
 Game.prototype.checkWin = function checkWin(){
   if (this.virusCount === 0) {
-    debugger
     this.nextPill.previewNext() 
     this.win = true
   }

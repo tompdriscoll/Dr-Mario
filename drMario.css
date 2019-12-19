@@ -260,10 +260,11 @@ svg:hover{
     position: relative;
     height: 15px;
     width: 30px;
-    background: #e6005a;
     right: -368px;
     top: 115px;
     display: flex;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .pill-half{
