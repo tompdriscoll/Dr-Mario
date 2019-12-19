@@ -263,6 +263,12 @@ svg:hover{
     background: #e6005a;
     right: -368px;
     top: 115px;
+    display: flex;
+}
+
+.pill-half{
+    height: 15px;
+    width: 15px;
 }
 
 

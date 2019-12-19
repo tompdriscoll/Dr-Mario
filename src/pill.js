@@ -9,7 +9,6 @@ function Pill(options){
     this.game = options.game;
     this.collided = false
     this.horizontal = true
-    this.placeOnGrid()
     
 }
 
@@ -30,6 +29,12 @@ Pill.prototype.placeOnGrid = function placeOnGrid(){
         squares[max].classList.toggle(`maxVer`)  
     }
     
+}
+
+Pill.prototype.previewNext = function previewNext(){
+    let next = document.getElementById('next-pill').children
+    next[0].classList.toggle(`${this.color1}`)
+    next[1].classList.toggle(`${this.color2}`)
 }
 
 Pill.prototype.move = function move() {

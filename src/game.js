@@ -38,15 +38,16 @@ Game.prototype.addViruses = function addViruses() {
 };
 
 Game.prototype.addPill = function addPill() {
+  if (!this.nextPill) this.nextPill = new Pill({game: this})
   let pill = new Pill({
     game: this
   });
-  this.currentPill = pill
+  this.currentPill = this.nextPill
   this.nextPill = pill
-  let next = document.getElementById('next-pill')
-  next.classList.add(this.nextPill.color1)
+  this.nextPill.previewNext()
+  this.currentPill.placeOnGrid()
   if (!this.checkCollisions()) return this.gameOver()
-  this.add(pill);
+  this.add(this.currentPill);
   return pill;
 }; 
 
@@ -223,6 +224,7 @@ Game.prototype.moveObjects = function moveObjects(delta) {
   if (this.currentPill) {
     this.currentPill.move()
   } else if (movers.every(mover => mover.collided)) {
+    this.nextPill.previewNext()
     this.addPill();} else{
     for (let i = 120; i>0; i-=8 ){
       movers.forEach(mover => {
@@ -258,11 +260,16 @@ Game.prototype.step = function step(delta) {
 };
 
 Game.prototype.gameOver = function gameOver(){
+  this.nextPill.previewNext()
   this.lose = true
 } 
 
 Game.prototype.checkWin = function checkWin(){
-  if (this.virusCount === 0) this.win = true
+  if (this.virusCount === 0) {
+    debugger
+    this.nextPill.previewNext() 
+    this.win = true
+  }
 }
 
 Game.prototype.handleFloaters = function handleFloaters(){
