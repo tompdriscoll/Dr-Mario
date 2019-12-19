@@ -38,18 +38,16 @@ Game.prototype.addViruses = function addViruses() {
 };
 
 Game.prototype.addPill = function addPill() {
-  // if (this.grid[3].classList.length > 1) return this.gameOver();
   let pill = new Pill({
     game: this
   });
-  this.currentPill = this.nextPill
+  this.currentPill = pill
   this.nextPill = pill
-  // this.bindKeyHandlers()
+  let next = document.getElementById('next-pill')
+  next.classList.add(this.nextPill.color1)
   if (!this.checkCollisions()) return this.gameOver()
   this.add(pill);
-  // this.bindKeyHandlers()
   return pill;
-
 }; 
 
 Game.prototype.allObjects = function allObjects() {
