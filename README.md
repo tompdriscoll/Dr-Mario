@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./Dr-Mario-logo.png" width="400" title="hover text">
+  <img src="./Dr-Mario-logo.png" width="400" height='200px' title="hover text">
 </p>
 
 # Dr-Mario
