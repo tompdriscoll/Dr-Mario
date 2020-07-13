@@ -1,1 +1,2 @@
 # Dr-Mario
+### This is a clone I made of the SNES game 'Dr Mario' made by Nintendo in 1990. I was able to build this modest clone with HTML, CSS, and Javascript as well as help from Webpack and the keymaster.js library.
