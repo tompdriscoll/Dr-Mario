@@ -186,8 +186,9 @@ svg:hover{
     margin-top: 5vh;
     flex-direction: column;
     position: absolute;
-    right: 20vw;
-    height: 46vh;
+    right: calc((100vw - 692px)/4);
+    top: 25vh;
+    height:50vh;
 }
 
 #github-svg{
