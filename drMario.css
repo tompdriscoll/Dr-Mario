@@ -1,5 +1,5 @@
 body{
-    background:#111111;;
+    background:black;;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,20 +28,22 @@ svg:hover{
 }
 
 #top{
-    background: url('./background.png') no-repeat;
-    height: 350px;
+    background: url('./dr-mario-background.jpg') no-repeat;
+    height: 551px;
+    width: 692px;
     background-position: center;
     background-size: cover;
+    margin-top: calc((100vh - 551px)/2);
 }
 
 #grid{
     background: black;
     justify-content: center;
     display: grid;
-    grid-template-columns: repeat(8, 15px);
+    grid-template-columns: repeat(8, 21px);
     width: fit-content;
-    margin: auto;
-    margin-top: -19px;
+    margin-top: 10px;
+    margin-left: 256px;
 }
 
 .hidden{
@@ -58,8 +60,8 @@ svg:hover{
 }
 
 .grid-square-square{
-    height: 15px;
-    width: 15px;
+    height: 21px;
+    width: 21px;
     background: #111111;
 }
 
@@ -204,76 +206,70 @@ svg:hover{
     height: 15px;
     width: 89px;
     position: relative;
-    background: #d7d7ff;
-    left: 340px;
-    top: 197px;
+    left: 506px;
+    top: 267px;
     padding: 2px;
     text-align: end;
-    font-size: 28px;
+    font-size: 48px;
 }
 
 #score {
-    height: 15px;
     width: 102px;
     position: relative;
-    background: #d7d7ff;
-    left: 28px;
-    top: 99px;
+    left: 45px;
+    top: 150px;
     padding: 3px;
     text-align: end;
-    font-size: 28px;
+    font-size: 48px;
 }
 
 #virus-count{
     height: 15px;
     width: 88px;
     position: relative;
-    background: #d7d7ff;
-    left: 340px;
-    top: 246px;
+    left: 506px;
+    top: 360px;
     padding: 3px;
     text-align: end;
-    font-size: 28px;
+    font-size: 48px;
 }
 
 #speed{
     height: 15px;
     width: 88px;
     position: relative;
-    background: #d7d7ff;
-    left: 340px;
-    top: 181px;
+    left: 506px;
+    top: 274px;
     padding: 3px;
     text-align: end;
-    font-size: 28px;
+    font-size: 48px;
 }
 
 #top-score{
     height: 15px;
     width: 102px;
     position: relative;
-    background: #d7d7ff;
-    left: 28px;
+    left: 45px;
     top: 14px;
     padding: 3px;
     text-align: end;
-    font-size: 28px;
+    font-size: 48px;
 }
 
 #next-pill{
     position: relative;
-    height: 15px;
-    width: 30px;
-    right: -368px;
-    top: 115px;
+    height: 21px;
+    width: 42px;
+    right: -523px;
+    top: 182px;
     display: flex;
     border-radius: 5px;
     overflow: hidden;
 }
 
 .pill-half{
-    height: 15px;
-    width: 15px;
+    height: 21px;
+    width: 21px;
 }
 
 
