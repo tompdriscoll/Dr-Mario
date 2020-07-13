@@ -101,7 +101,6 @@ GameView.prototype.clearGrid = function clearGrid(){
 
 function switchScreen(){
   Array.from(document.getElementsByClassName('toHide')).forEach(ele => ele.classList.toggle('hidden'))
-  
   key.unbind('space')
   key.unbind('left')
   key.unbind('right')
