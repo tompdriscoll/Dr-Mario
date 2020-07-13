@@ -45,6 +45,7 @@ GameView.prototype.start = function start() {
   this.game = new Game(this.grid, thisLevel); 
   document.getElementById('lvl').textContent = thisLevel
   document.getElementById('top-score').textContent = this.topScore
+  document.getElementById('score').textContent = 0
   this.music.load()
   var gameLoop = setInterval(() => {
     
@@ -100,6 +101,7 @@ GameView.prototype.clearGrid = function clearGrid(){
 
 function switchScreen(){
   Array.from(document.getElementsByClassName('toHide')).forEach(ele => ele.classList.toggle('hidden'))
+  
   key.unbind('space')
   key.unbind('left')
   key.unbind('right')
