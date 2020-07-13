@@ -182,6 +182,10 @@ svg:hover{
     display: flex;
     justify-content: space-evenly;
     margin-top: 5vh;
+    flex-direction: column;
+    position: absolute;
+    right: 20vw;
+    height: 46vh;
 }
 
 #github-svg{
