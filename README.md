@@ -2,7 +2,7 @@
 ### This is a clone I made of the SNES game 'Dr Mario' made by Nintendo in 1990. I was able to build this modest clone with HTML, CSS, and Javascript as well as help from Webpack and the keymaster.js library.
 
 <p align="center">
-  <img src="./Dr-Mario-Instructions.png" width="400" title="hover text">
+  <img src="./Dr-Mario-World-1024x538.jpg" width="400" title="hover text">
 </p>
 
 ## Gameplay
